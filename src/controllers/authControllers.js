@@ -1,15 +1,18 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userDb";
+import User from "../models/user.js";
 
+
+const JWT_SECRET= process.env.JWT_SECRET ;
 const generateToken = (user) => {
-  return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user._id },JWT_SECRET, {
     expiresIn: "1d",
   });
 };
-
 // Signup
 export const signup = async (req, res) => {
   try {
+    console.log("SEcret",process.env.JWT_SECRET)
+
     const { username, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -31,6 +34,7 @@ export const signup = async (req, res) => {
 // Signin
 export const signin = async (req, res) => {
   try {
+    
     const { email, password } = req.body;
 
     const user = await User.findOne({ email }).select("+password");

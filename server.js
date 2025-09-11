@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import authRoutes from "./routes/authRoutes.js";
-import { protect } from "./middleware/authMiddleware.js";
+import authRoutes from "./src/routes/authRoutes.js";
+import { protect } from "./src/middleware/authMiddleware.js";
 
 dotenv.config();
 const app = express();
@@ -16,7 +16,7 @@ app.get("/api/profile", protect, (req, res) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URL)
   .then(() => {
     app.listen(process.env.PORT || 5000, () =>
       console.log("Server running on port 5000")
