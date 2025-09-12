@@ -21,7 +21,7 @@ console.log("secretkey",process.env.JWT_SECRET)
 
 app.use("/api/auth", authRoutes);
 app.use("/api",protect,tripROutes)
-app.use("/api",protect,areaRotues)
+app.use("/api",areaRotues)
 
 app.get("/api/profile", protect, (req, res) => {
   res.json({ message: "Welcome!", user: req.user });
