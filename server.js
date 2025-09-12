@@ -5,9 +5,15 @@ import authRoutes from "./src/routes/authRoutes.js";
 import { protect } from "./src/middleware/authMiddleware.js";
 import tripROutes from "./src/routes/tripRoutes.js"
 import areaRotues from "./src/routes/areaRoutes.js"
+import cors from "cors";
+
+
 
 dotenv.config();
 const app = express();
+
+app.use(cors());
+
 
 app.use(express.json());
 
