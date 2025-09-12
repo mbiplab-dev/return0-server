@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./src/routes/authRoutes.js";
 import { protect } from "./src/middleware/authMiddleware.js";
+import tripROutes from "./src/routes/tripRoutes.js"
 
 dotenv.config();
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api",protect,tripROutes)
 
 app.get("/api/profile", protect, (req, res) => {
   res.json({ message: "Welcome!", user: req.user });
