@@ -20,8 +20,8 @@ app.use(express.json());
 console.log("secretkey",process.env.JWT_SECRET)
 
 app.use("/api/auth", authRoutes);
-app.use("/api",protect,tripROutes)
 app.use("/api",areaRotues)
+app.use("/api",protect,tripROutes)
 
 app.get("/api/profile", protect, (req, res) => {
   res.json({ message: "Welcome!", user: req.user });
