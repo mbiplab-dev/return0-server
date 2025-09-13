@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./src/routes/authRoutes.js";
 import { protect } from "./src/middleware/authMiddleware.js";
-import tripROutes from "./src/routes/tripRoutes.js"
-import areaRotues from "./src/routes/areaRoutes.js"
+import areaRoutes from "./src/routes/areaRoutes.js"
+import tripRoutes from "./src/routes/tripRoutes.js"
 import cors from "cors";
 
 
@@ -20,8 +20,8 @@ app.use(express.json());
 console.log("secretkey",process.env.JWT_SECRET)
 
 app.use("/api/auth", authRoutes);
-app.use("/api",areaRotues)
-app.use("/api",protect,tripROutes)
+app.use("/api/trips",protect,tripRoutes)
+app.use("/api",areaRoutes)
 
 app.get("/api/profile", protect, (req, res) => {
   res.json({ message: "Welcome!", user: req.user });

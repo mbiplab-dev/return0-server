@@ -1,18 +1,44 @@
-import expres from 'express';
-import { allTrips, createTrip, addMembers, addItinerary } from '../controllers/tripControllers.js';
+// =============================================================================
+// TRIP ROUTES (Backend)
+// File path: routes/tripRoutes.js
+// =============================================================================
 
-const router = expres.Router()
+import express from 'express';
+import { verifyToken } from '../controllers/authController.js';
+import {
+  createTrip,
+  getActiveTrip,
+  getCurrentTrip,
+  getUserTrips,
+  getTripById,
+  updateTrip,
+  deleteTrip,
+  archiveTrip,
+  activateTrip,
+  completeTrip,
+  getTripStats,
+  checkActiveTrip
+} from '../controllers/tripController.js';
 
-// Step 1 - create trip
-router.post("/trips", createTrip);
+const router = express.Router();
 
-// Step 2 - add members
-router.post("/trips/:tripId/members", addMembers);
+// All routes require authentication
+router.use(verifyToken);
 
-// Step 3 - add itinerary
-router.post("/trips/:tripId/itinerary", addItinerary);
+// Trip CRUD operations
+router.post('/', createTrip);                    // POST /api/trips
+router.get('/', getUserTrips);                   // GET /api/trips
+router.get('/active', getActiveTrip);            // GET /api/trips/active
+router.get('/current', getCurrentTrip);          // GET /api/trips/current
+router.get('/check-active', checkActiveTrip);    // GET /api/trips/check-active
+router.get('/stats', getTripStats);              // GET /api/trips/stats
+router.get('/:tripId', getTripById);             // GET /api/trips/:tripId
+router.put('/:tripId', updateTrip);              // PUT /api/trips/:tripId
+router.delete('/:tripId', deleteTrip);           // DELETE /api/trips/:tripId
 
-//get list of all trips
-router.get("/trips/:userId",allTrips);
+// Trip status management
+router.patch('/:tripId/archive', archiveTrip);   // PATCH /api/trips/:tripId/archive
+router.patch('/:tripId/activate', activateTrip); // PATCH /api/trips/:tripId/activate
+router.patch('/:tripId/complete', completeTrip); // PATCH /api/trips/:tripId/complete
 
 export default router;
