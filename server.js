@@ -1,5 +1,5 @@
 // =============================================================================
-// UPDATED SERVER.JS WITH SOS ROUTES
+// UPDATED SERVER.JS WITH AUTHORITY ROUTES
 // File path: server.js
 // =============================================================================
 
@@ -11,6 +11,8 @@ import tripRoutes from "./src/routes/tripRoutes.js";
 import areaRoutes from "./src/routes/areaRoutes.js";
 import notificationRoutes from "./src/routes/notificationRoutes.js";
 import sosRoutes from "./src/routes/sosRoutes.js";
+import authorityRoutes from "./src/routes/authorityRoutes.js";
+import touristRoutes from "./src/routes/touristRoutes.js";
 import { protect } from "./src/middleware/authMiddleware.js";
 import cors from "cors";
 
@@ -29,6 +31,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/trips", protect, tripRoutes);
 app.use("/api/notifications", protect, notificationRoutes); // Protected notification routes
 app.use("/api/sos", protect, sosRoutes); // Protected SOS complaint routes
+app.use("/api/authority", authorityRoutes);            // Existing authority dashboard routes
+app.use("/api/tourist-management", touristRoutes); 
 app.use("/api", areaRoutes);
 
 // Protected profile route (example)
@@ -66,22 +70,23 @@ app.use((req, res) => {
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log("âœ… Connected to MongoDB");
+    console.log("✅ Connected to MongoDB");
     
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`ðŸš€ Server running on port ${PORT}`);
-      console.log(`ðŸ"‹ Available routes:`);
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📋 Available routes:`);
       console.log(`   - Auth: /api/auth/*`);
       console.log(`   - Trips: /api/trips/*`);
       console.log(`   - Notifications: /api/notifications/*`);
       console.log(`   - SOS Complaints: /api/sos/*`);
+      console.log(`   - Authority Dashboard: /api/authority/*`);
       console.log(`   - Areas: /api/*`);
       console.log(`   - Health: /api/health`);
     });
   })
   .catch((err) => {
-    console.error("âŒ Database connection error:", err);
+    console.error("❌ Database connection error:", err);
     process.exit(1);
   });
 
