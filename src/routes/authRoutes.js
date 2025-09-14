@@ -23,9 +23,7 @@ const signupValidation = [
   body('username')
     .trim()
     .isLength({ min: 2, max: 50 })
-    .withMessage('Username must be between 2 and 50 characters')
-    .matches(/^[a-zA-Z0-9_\s]+$/)
-    .withMessage('Username can only contain letters, numbers, underscores, and spaces'),
+    .withMessage('Username must be between 2 and 50 characters'),
   
   body('email')
     .isEmail()
@@ -34,9 +32,7 @@ const signupValidation = [
   
   body('password')
     .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
-    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+    .withMessage('Password must be at least 6 characters long'),
   
   body('phone')
     .optional()
