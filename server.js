@@ -1,5 +1,5 @@
 // =============================================================================
-// UPDATED SERVER.JS WITH AUTHORITY ROUTES
+// UPDATED SERVER.JS WITH ZONE ROUTES
 // File path: server.js
 // =============================================================================
 
@@ -13,6 +13,7 @@ import notificationRoutes from "./src/routes/notificationRoutes.js";
 import sosRoutes from "./src/routes/sosRoutes.js";
 import authorityRoutes from "./src/routes/authorityRoutes.js";
 import touristRoutes from "./src/routes/touristRoutes.js";
+import zoneRoutes from "./src/routes/zoneRoutes.js"; // Add zone routes
 import { protect } from "./src/middleware/authMiddleware.js";
 import cors from "cors";
 
@@ -29,10 +30,11 @@ console.log("JWT Secret:", process.env.JWT_SECRET ? "Configured" : "Missing");
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/trips", protect, tripRoutes);
-app.use("/api/notifications", protect, notificationRoutes); // Protected notification routes
-app.use("/api/sos", protect, sosRoutes); // Protected SOS complaint routes
-app.use("/api/authority", authorityRoutes);            // Existing authority dashboard routes
-app.use("/api/tourist-management", touristRoutes); 
+app.use("/api/notifications", protect, notificationRoutes);
+app.use("/api/sos", protect, sosRoutes);
+app.use("/api/authority", authorityRoutes);
+app.use("/api/tourist-management", touristRoutes);
+app.use("/api", zoneRoutes); // Add zone routes
 app.use("/api", areaRoutes);
 
 // Protected profile route (example)
@@ -81,6 +83,8 @@ mongoose
       console.log(`   - Notifications: /api/notifications/*`);
       console.log(`   - SOS Complaints: /api/sos/*`);
       console.log(`   - Authority Dashboard: /api/authority/*`);
+      console.log(`   - Tourist Management: /api/tourist-management/*`);
+      console.log(`   - Zones: /api/zones`);
       console.log(`   - Areas: /api/*`);
       console.log(`   - Health: /api/health`);
     });
